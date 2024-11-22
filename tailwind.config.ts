@@ -13,7 +13,6 @@ const config: Config = {
         primary: {
           "100": "#FFF1E6",
           "500": "#FF7000",
-          bayburt: "yellow",
         },
         dark: {
           "100": "#000000",

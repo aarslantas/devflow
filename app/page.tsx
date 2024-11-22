@@ -1,7 +1,4 @@
 export default function Home() {
-  return (
-    <div className="text-3xl font-black text-primary-bayburt">
-      Welcome to Nextjs 15{" "}
-    </div>
-  );
+  // TODO:asdasdasd
+  return <div className="h1-bold">Welcome to Nextjs 15 </div>;
 }

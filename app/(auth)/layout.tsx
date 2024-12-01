@@ -1,3 +1,4 @@
+import SocialAutForm from "@/components/forms/SocialAutForm";
 import Image from "next/image";
 import React, { ReactNode } from "react";
 
@@ -21,7 +22,7 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
           />
         </div>
         {children}
-        <p>Social Auth</p>
+        <SocialAutForm />
       </section>
     </main>
   );

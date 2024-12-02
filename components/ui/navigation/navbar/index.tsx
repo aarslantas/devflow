@@ -5,7 +5,7 @@ import ThemeToggle from "./Theme";
 
 const Navbar = () => {
   return (
-    <nav className="flex-between background-light900_dark200 fixed z-50 w-full p-6 shadow-light-300 sm:px-12 dark:shadow-none gap-5">
+    <nav className=" fixed z-50 flex-between background-light900_dark200  w-full p-6 shadow-light-300 sm:px-12 dark:shadow-none gap-5">
       <Link href="/" className="flex items-center gap-1">
         <Image
           src="/images/site-logo.svg"

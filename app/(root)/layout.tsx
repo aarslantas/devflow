@@ -2,13 +2,17 @@ import React from "react";
 
 import Navbar from "@/components/ui/navigation/navbar";
 
-const RootLayout = () => {
+const Layout = ({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) => {
   return (
     <div>
       <Navbar />
-      RootLayout
+      {children}
     </div>
   );
 };
 
-export default RootLayout;
+export default Layout;

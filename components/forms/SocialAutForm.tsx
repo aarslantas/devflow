@@ -1,14 +1,40 @@
-import React from "react";
-import { Button } from "../ui/button";
+"use client";
+
 import Image from "next/image";
+import { signIn } from "next-auth/react";
+import React from "react";
+
+import ROUTES from "@/constants/routes";
+import { toast } from "@/hooks/use-toast";
+
+import { Button } from "../ui/button";
 
 const SocialAutForm = () => {
   const buttonClass =
-    "py-3.5 background-dark400-light900 min-h-12 flex-1 rounded-2 px-4 body-medium text-dark200_light800";
+    "background-dark400_light900 text-dark200_light800 body-medium min-h-12 flex-1 rounded-2 px-4 py-3.5";
+
+  const handleSingIn = async (provider: "github" | "google") => {
+    try {
+      await signIn(provider, {
+        redirectTo: ROUTES.HOME,
+        redirect: false,
+      });
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Sign-in Failed",
+        description:
+          error instanceof Error
+            ? error.message
+            : "An error occeured during sign-in",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
-    <div className="gap-2.5 mt-10 flex-wrap ">
-      <Button className={buttonClass}>
+    <div className="mt-10 flex flex-wrap gap-4 ">
+      <Button className={buttonClass} onClick={() => handleSingIn("google")}>
         <Image
           src="icons/github.svg"
           alt="Github Logo"
@@ -18,7 +44,8 @@ const SocialAutForm = () => {
         />
         <span>Log in With Github</span>
       </Button>
-      <Button className={buttonClass}>
+
+      <Button className={buttonClass} onClick={() => handleSingIn("google")}>
         <Image
           src="icons/google.svg"
           alt="Google Logo"

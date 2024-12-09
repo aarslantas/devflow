@@ -6,7 +6,6 @@
     "plugin:tailwindcss/recommended",
     "prettier"
   ],
-
   "plugins": ["import"],
   "rules": {
     "import/order": [
@@ -28,7 +27,9 @@
             "position": "after"
           }
         ],
-        "pathGroupsExcludedImportTypes": ["builtin"],
+        "pathGroupsExcludedImportTypes": [
+          "builtin"
+        ],
         "alphabetize": {
           "order": "asc",
           "caseInsensitive": true

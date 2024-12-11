@@ -1,11 +1,14 @@
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import ROUTES from "@/constants/routes";
 import { Link } from "lucide-react";
 import Image from "next/image";
 
@@ -24,8 +27,8 @@ const MobileNavigation = () => {
         side="left"
         className="background-light900_dark200"
       >
-        <SheetTitle className="hidden">
-          Navigation
+        <SheetTitle className="hidden text-red-200">
+          Navigation Baybrut
         </SheetTitle>
         <Link
           href="/"
@@ -37,6 +40,23 @@ const MobileNavigation = () => {
             height={23}
             alt="Logo"
           />
+          <div className="no-scrollbar flex h-[calc(100vh-80px)] flex-col justify-between overflow-auto">
+            <SheetClose asChild>
+              <section className="flex h-full flex-col gap-6 pt-16">
+                <p>Nav Link</p>
+              </section>
+            </SheetClose>
+            <div className="fle flex-col gap-3">
+              <SheetClose asChild>
+                <Link href={ROUTES.SIGN_UP}>
+                  {/* <Button className="smal-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none"> */}
+                  <Button className="smal-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg border px-4 py-3 shadow-none">
+                    Sign Up
+                  </Button>
+                </Link>
+              </SheetClose>
+            </div>
+          </div>
         </Link>
       </SheetContent>
     </Sheet>

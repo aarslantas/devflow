@@ -1,6 +1,7 @@
 import Navbar from "@/components/navigation/navbar";
-import LeftSidebar from "@/components/navigation/navbar/LeftSidebar";
+import LeftSidebar from "@/components/navigation/LeftSidebar";
 import React from "react";
+import RightSidebar from "@/components/navigation/RightSidebar";
 
 const Layout = ({
   children,
@@ -17,6 +18,7 @@ const Layout = ({
             {children}
           </div>
         </section>
+        <RightSidebar />
       </div>
     </main>
   );

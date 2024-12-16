@@ -1,5 +1,5 @@
 import React from "react";
-import NavLinks from "./NavLinks";
+import NavLinks from "./navbar/NavLinks";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
 

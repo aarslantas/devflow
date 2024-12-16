@@ -1,5 +1,5 @@
 import Navbar from "@/components/navigation/navbar";
-import LeftSidebar from "@/components/navigation/navbar/LeftSidebar";
+import LeftSidebar from "@/components/navigation/LeftSidebar";
 import React from "react";
 
 const Layout = ({

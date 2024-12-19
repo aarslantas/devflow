@@ -21,7 +21,8 @@ const spaceGrotesk = localFont({
 
 export const metadata: Metadata = {
   title: "DevFlow",
-  description: "A better version of Stack Overflow",
+  description:
+    "A better version of Stack Overflow",
 };
 
 const RootLayout = async ({
@@ -33,6 +34,13 @@ const RootLayout = async ({
 
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link
+          href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+          rel="stylesheet"
+          type="text/css"
+        ></link>
+      </head>
       <SessionProvider session={session}>
         <body
           className={`${inter.className} ${spaceGrotesk.variable} antialiased`}

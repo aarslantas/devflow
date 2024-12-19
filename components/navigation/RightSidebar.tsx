@@ -2,6 +2,7 @@ import ROUTES from "@/constants/routes";
 import { Link } from "lucide-react";
 import Image from "next/image";
 import React from "react";
+import TagCard from "../cards/TagCard";
 
 const hotQuestions = [
   {
@@ -24,6 +25,34 @@ const hotQuestions = [
   {
     _id: "5",
     title: "How to use React Context ?",
+  },
+];
+
+const popularTags = [
+  {
+    _id: "1",
+    name: "javascript",
+    questions: 100,
+  },
+  {
+    _id: "2",
+    name: "react",
+    questions: 200,
+  },
+  {
+    _id: "3",
+    name: "react-native",
+    questions: 200,
+  },
+  {
+    _id: "4",
+    name: "react-redux",
+    questions: 10,
+  },
+  {
+    _id: "5",
+    name: "redux",
+    questions: 100,
   },
 ];
 
@@ -53,6 +82,26 @@ const RightSidebar = () => {
               />
             </Link>
           ))}
+        </div>
+
+        <div className="mt-16">
+          <h3 className="h3-bold text-dark_light900">
+            Popular Tags
+          </h3>
+          <div className="mt-8 flex flex-col gap-4">
+            {popularTags.map(
+              ({ _id, name, questions }) => (
+                <TagCard
+                  key={_id}
+                  _id={_id}
+                  name={name}
+                  questions={questions}
+                  showCount
+                  compact
+                />
+              )
+            )}
+          </div>
         </div>
       </div>
     </section>

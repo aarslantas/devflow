@@ -1,7 +1,8 @@
 import { auth, signOut } from "@/auth";
+import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
-import { Link } from "lucide-react";
+import Link from "next/link";
 
 export default async function Home() {
   const session = await auth();
@@ -19,7 +20,12 @@ export default async function Home() {
         </Button>
       </section>
       <section className="mt-11">
-        LocalSearch
+        <LocalSearch
+          route="/"
+          imgSrc="/icons/search.svg"
+          placeholder="Search questions..."
+          otherClasses="flex-1"
+        />
       </section>
       HomeFilter
       <div className="mt-10 flex w-full flex-col gap-6">

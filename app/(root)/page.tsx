@@ -2,6 +2,8 @@ import { Tags } from "lucide-react";
 import Link from "next/link";
 
 import { auth } from "@/auth";
+import QuestionCard from "@/components/cards/QuestionCard";
+import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
@@ -65,13 +67,19 @@ export default async function Home({
   /*   const session = await auth();
   console.log("session", session); */
 
-  const { query = "" } = await searchParams;
+  const { query = "", filter = "" } =
+    await searchParams;
 
   const filteredQuestions = questions.filter(
     (question) => {
-      return question.title
+      const matchesQuery = question.title
         .toLowerCase()
         .includes(query.toLowerCase());
+      const matchesFilter = filter
+        ? question.tags[0].name.toLowerCase() ===
+          filter.toLowerCase()
+        : true;
+      return matchesQuery && matchesFilter;
     }
   );
 
@@ -100,9 +108,10 @@ export default async function Home({
       <HomeFilter />
       <div className="mt-10 flex w-full flex-col gap-6">
         {filteredQuestions.map((question) => (
-          <h1 key={question._id}>
-            {question.title}
-          </h1>
+          <QuestionCard
+            key={question._id}
+            question={question}
+          />
         ))}
       </div>
       {/* <h1 className="h1-bold">

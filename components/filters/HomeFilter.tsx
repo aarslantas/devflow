@@ -42,19 +42,19 @@ const HomeFilter = () => {
 
   const handleTypeClick = (filter: string) => {
     let newUrl;
-    if (filter) {
+    if (filter === active) {
+      setActive("");
+      newUrl = removeKeysFromQuery({
+        params: searchParams.toString(),
+        keysToRemove: ["filter"],
+      });
+    } else {
       setActive(filter);
 
       newUrl = formUrlQuery({
         params: searchParams.toString(),
         key: "filter",
         value: filter.toLowerCase(),
-      });
-    } else {
-      setActive("");
-      newUrl = removeKeysFromQuery({
-        params: searchParams.toString(),
-        keysToRemove: ["query"],
       });
     }
 
@@ -71,7 +71,9 @@ const HomeFilter = () => {
               ? "bg-primary-100 text-primary-500 hover:bg-primary-100 dark:bg-dark-400 dark:text-primary-500 dark:hover:bg-dark-400"
               : "bg-light-800 text-light-500 hover:bg-light-800 dark:bg-dark-300 dark:text-light-500 dark:hover:bg-dark-300"
           )}
-          onClick={() => handleTypeClick}
+          onClick={() =>
+            handleTypeClick(filter.value)
+          }
         >
           {filter.name}
         </Button>

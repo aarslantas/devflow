@@ -8,23 +8,21 @@ import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
 
-const questions = [
+const questions: Question[] = [
   {
-    _id: 1,
+    _id: "1",
     title:
       "What is the best way to learn React.js?",
-    description:
-      "I'm looking for a comprehensive guide to learning Next.js.",
     tags: [
       {
-        _id: 1,
-        name: "Next.js",
+        _id: "1",
+        name: "react",
       },
     ],
     author: {
-      _id: 1,
+      _id: "1",
       name: "John Doe",
-      picture: "https://github.com/john-doe.png",
+      image: "https://github.com/john-doe.png",
     },
     upvotes: 10,
     answers: 5,
@@ -32,21 +30,19 @@ const questions = [
     createdAt: new Date(),
   },
   {
-    _id: 2,
+    _id: "2",
     title:
       "What is the best way to learn Next.js?",
-    description:
-      "I'm looking for a comprehensive guide to learning Next.js.",
     tags: [
       {
-        _id: 1,
-        name: "Next.js",
+        _id: "2",
+        name: "javascript",
       },
     ],
     author: {
-      _id: 1,
+      _id: "2",
       name: "John Doe",
-      picture: "https://github.com/john-doe.png",
+      image: "https://github.com/john-doe.png",
     },
     upvotes: 10,
     answers: 5,
@@ -75,15 +71,17 @@ export default async function Home({
       const matchesQuery = question.title
         .toLowerCase()
         .includes(query.toLowerCase());
+
+      console.log("matchesQuery", matchesQuery);
       const matchesFilter = filter
         ? question.tags[0].name.toLowerCase() ===
           filter.toLowerCase()
         : true;
+
+      console.log("matchesFilter", matchesFilter);
       return matchesQuery && matchesFilter;
     }
   );
-
-  // co
 
   return (
     <>
@@ -107,7 +105,7 @@ export default async function Home({
       </section>
       <HomeFilter />
       <div className="mt-10 flex w-full flex-col gap-6">
-        {filteredQuestions.map((question) => (
+        {questions.map((question) => (
           <QuestionCard
             key={question._id}
             question={question}

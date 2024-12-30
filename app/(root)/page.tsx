@@ -22,7 +22,8 @@ const questions: Question[] = [
     author: {
       _id: "1",
       name: "John Doe",
-      image: "https://github.com/john-doe.png",
+      image:
+        "https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
     },
     upvotes: 10,
     answers: 5,
@@ -42,7 +43,8 @@ const questions: Question[] = [
     author: {
       _id: "2",
       name: "John Doe",
-      image: "https://github.com/john-doe.png",
+      image:
+        "https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
     },
     upvotes: 10,
     answers: 5,

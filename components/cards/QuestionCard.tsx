@@ -5,6 +5,7 @@ import ROUTES from "@/constants/routes";
 import { getTimeStamp } from "@/lib/utils";
 
 import TagCard from "./TagCard";
+import Metric from "../Metric";
 
 interface QuestionCardProps {
   question: Question;
@@ -39,6 +40,42 @@ const QuestionCard = ({
             compact
           />
         ))}
+      </div>
+
+      <div className="flex-between mt-6 w-full flex-wrap gap-3">
+        <Metric
+          imgUrl={question.author.image}
+          alt={question.author.name}
+          value={question.author.name}
+          title={`asked ${getTimeStamp(question.createdAt)}`}
+          href={ROUTES.PROFILE(
+            question.author._id
+          )}
+          isAuthor
+        />
+        <div className="mx-sm:flex-wrap flex items-center gap-3 max-sm:justify-start">
+          <Metric
+            imgUrl="/icons/like.svg"
+            alt="like"
+            value={question.upvotes}
+            title="Votes"
+            textStyles="small-medium text-dark400_light800"
+          />
+          <Metric
+            imgUrl="/icons/message.svg"
+            alt="answers"
+            value={question.answers}
+            title="Answers"
+            textStyles="small-medium text-dark400_light800"
+          />
+          <Metric
+            imgUrl="/icons/eye.svg"
+            alt="views"
+            value={question.views}
+            title="Views"
+            textStyles="small-medium text-dark400_light800"
+          />
+        </div>
       </div>
     </div>
   );

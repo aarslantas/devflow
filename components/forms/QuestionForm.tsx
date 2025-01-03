@@ -90,6 +90,7 @@ const QuestionForm = () => {
                   value={field.value}
                   editorRef={editorRef}
                   fieldChange={field.onChange}
+                  markdown={field.value}
                 />
               </FormControl>
               <FormDescription className="body-regular mt-2.5 text-light-500">

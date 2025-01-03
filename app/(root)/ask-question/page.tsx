@@ -2,8 +2,6 @@ import React from "react";
 
 import QuestionForm from "@/components/forms/QuestionForm";
 
-import page from "../page";
-
 const AskAQuestion = () => {
   return (
     <>

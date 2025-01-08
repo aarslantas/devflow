@@ -30,6 +30,10 @@ const TagCard = ({
 }: Props) => {
   const iconClass = getDevIconClassName(name);
 
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+  };
+
   const content = (
     <>
       <Badge className="background-light800_dark300 text-light400_light500 flex flex-row gap-2 rounded-md border-none px-4 py-2 uppercase">
@@ -58,7 +62,10 @@ const TagCard = ({
 
   if (compact) {
     return isButton ? (
-      <button className="flex justify-between gap-2">
+      <button
+        onClick={handleClick}
+        className="flex justify-between gap-2"
+      >
         {content}
       </button>
     ) : (

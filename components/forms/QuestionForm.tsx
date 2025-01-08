@@ -77,16 +77,28 @@ const QuestionForm = () => {
     }
   };
 
-  const handleCreateQuestion = () => {};
+  const handleCreateQuestion = (
+    data: z.infer<typeof AskQuestionSchema>
+  ) => {
+    console.log("data", data);
+  };
 
   const handleTagRemove = (
     tag: string,
     field: { value: string[] }
   ) => {
-    form.setValue(
-      "tags",
-      field.value.filter((t) => t !== tag)
+    const newTags = field.value.filter(
+      (t) => t !== tag
     );
+
+    form.setValue("tags", newTags);
+
+    if (newTags.length === 0) {
+      form.setError("tags", {
+        type: "required",
+        message: "Tags are required",
+      });
+    }
   };
   return (
     <Form {...form}>

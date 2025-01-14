@@ -1,19 +1,29 @@
-import { model, models, Schema } from "mongoose";
+import {
+  model,
+  models,
+  Schema,
+  Types,
+} from "mongoose";
 
 // Account arayüzü
 export interface IAccount {
-  userId: string;
+  userId: Types.ObjectId;
+  name: string;
+  image?: string;
   provider: string;
   providerAccountId: string;
   password?: string;
-  profileImage?: string;
 }
 
-const AccountSchema = new Schema(
+const AccountSchema = new Schema<IAccount>(
   {
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      required: true,
+    },
+    name: {
+      type: String,
       required: true,
     },
     provider: {
@@ -29,7 +39,7 @@ const AccountSchema = new Schema(
       type: String,
       select: false,
     },
-    profileImage: {
+    image: {
       type: String,
       default: null,
     },

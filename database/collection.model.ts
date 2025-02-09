@@ -1,8 +1,9 @@
 import {
-  model,
-  models,
   Schema,
+  models,
+  model,
   Types,
+  Document,
 } from "mongoose";
 
 export interface ICollection {
@@ -10,6 +11,9 @@ export interface ICollection {
   question: Types.ObjectId;
 }
 
+export interface ICollectionDoc
+  extends ICollection,
+    Document {}
 const CollectionSchema = new Schema<ICollection>(
   {
     author: {
@@ -28,6 +32,9 @@ const CollectionSchema = new Schema<ICollection>(
 
 const Collection =
   models?.Collection ||
-  model<ICollection>("", CollectionSchema);
+  model<ICollection>(
+    "Collection",
+    CollectionSchema
+  );
 
 export default Collection;

@@ -1,20 +1,23 @@
 import {
+  Schema,
   model,
   models,
-  Schema,
   Types,
+  Document,
 } from "mongoose";
 
-// Account arayüzü
 export interface IAccount {
   userId: Types.ObjectId;
   name: string;
   image?: string;
-  provider: string;
-  providerAccountId: string;
   password?: string;
+  provider: string; // e.g., 'github', 'google', 'credentials'
+  providerAccountId: string;
 }
 
+export interface IAccountDoc
+  extends IAccount,
+    Document {}
 const AccountSchema = new Schema<IAccount>(
   {
     userId: {
@@ -22,26 +25,13 @@ const AccountSchema = new Schema<IAccount>(
       ref: "User",
       required: true,
     },
-    name: {
-      type: String,
-      required: true,
-    },
-    provider: {
-      type: String,
-      required: true,
-    },
+    name: { type: String, required: true },
+    image: { type: String },
+    password: { type: String },
+    provider: { type: String, required: true },
     providerAccountId: {
       type: String,
       required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      select: false,
-    },
-    image: {
-      type: String,
-      default: null,
     },
   },
   { timestamps: true }

@@ -13,7 +13,9 @@ const SocialAutForm = () => {
   const buttonClass =
     "background-dark400_light900 text-dark200_light800 body-medium min-h-12 flex-1 rounded-2 px-4 py-3.5";
 
-  const handleSingIn = async (provider: "github" | "google") => {
+  const handleSingIn = async (
+    provider: "github" | "google"
+  ) => {
     try {
       await signIn(provider, {
         redirectTo: ROUTES.HOME,
@@ -34,7 +36,10 @@ const SocialAutForm = () => {
 
   return (
     <div className="mt-10 flex flex-wrap gap-4 ">
-      <Button className={buttonClass} onClick={() => handleSingIn("google")}>
+      <Button
+        className={buttonClass}
+        onClick={() => handleSingIn("github")}
+      >
         <Image
           src="icons/github.svg"
           alt="Github Logo"
@@ -45,7 +50,10 @@ const SocialAutForm = () => {
         <span>Log in With Github</span>
       </Button>
 
-      <Button className={buttonClass} onClick={() => handleSingIn("google")}>
+      <Button
+        className={buttonClass}
+        onClick={() => handleSingIn("google")}
+      >
         <Image
           src="icons/google.svg"
           alt="Google Logo"

@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import {
   DefaultValues,
   FieldValues,
@@ -8,7 +9,7 @@ import {
   SubmitHandler,
   useForm,
 } from "react-hook-form";
-import { Schema, z, ZodType } from "zod";
+import { z, ZodType } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,7 +21,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
 import ROUTES from "@/constants/routes";
 
 interface AuthFormProps<T extends FieldValues> {
@@ -69,7 +69,7 @@ const AuthForm = <T extends FieldValues>({
               control={form.control}
               name={field as Path<T>}
               render={({ field }) => (
-                <FormItem className="flex w-full flex-col ga-2.5">
+                <FormItem className="ga-2.5 flex w-full flex-col">
                   <FormLabel className="paragragh-medium text-dark400_light700">
                     {field.name === "email"
                       ? "Email Adress"
@@ -99,7 +99,7 @@ const AuthForm = <T extends FieldValues>({
 
         <Button
           disabled={form.formState.isSubmitting}
-          className="primary-gradient paragraph-medium min-h-2 w-full rounded-2  font-inter !text-light-900 px-4 py-2 "
+          className="primary-gradient paragraph-medium min-h-2 w-full rounded-2  px-4 py-2 font-inter !text-light-900 "
           type="submit"
         >
           {form.formState.isSubmitting
@@ -112,7 +112,7 @@ const AuthForm = <T extends FieldValues>({
           <p>
             Don't have an account?{" "}
             <Link
-              className="paragrapg-semibold"
+              className="paragraph-semibold"
               href={ROUTES.SIGN_UP}
             >
               Sign up
@@ -122,7 +122,7 @@ const AuthForm = <T extends FieldValues>({
           <p>
             Already have an account?{" "}
             <Link
-              className="paragrapg-semibold"
+              className="paragraph-semibold"
               href={ROUTES.SIGN_IN}
             >
               Sign in

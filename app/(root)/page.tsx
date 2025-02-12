@@ -1,4 +1,5 @@
 import { Tags } from "lucide-react";
+import { SearchParams } from "next/dist/server/request/search-params";
 import Link from "next/link";
 
 import { auth } from "@/auth";
@@ -7,6 +8,7 @@ import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
+import { handleError } from "@/lib/handlers/error";
 
 const questions: Question[] = [
   {
@@ -53,11 +55,20 @@ const questions: Question[] = [
   },
 ];
 
-interface SearchParams {
-  searchParams: Promise<{
-    [key: string]: string;
-  }>;
-}
+const test = async () => {
+  try {
+    throw new Error("This is a test error");
+  } catch (error) {
+    throw new Error("This is a test error");
+    handleError(error);
+  }
+
+  interface SearchParams {
+    searchParams: Promise<{
+      [key: string]: string;
+    }>;
+  }
+};
 
 export default async function Home({
   searchParams,
@@ -67,6 +78,10 @@ export default async function Home({
 
   const { query = "", filter = "" } =
     await searchParams;
+
+  const result = await test();
+
+  console.log("result", result);
 
   const filteredQuestions = questions.filter(
     (question) => {

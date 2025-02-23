@@ -16,24 +16,3 @@ export async function POST(request: Request) {
     status: 201,
   });
 }
-
-export async function GET_BY_ID(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const { searchParams } = new URL(request.url);
-
-  const id = params.id;
-  const ticket = tickets.find(
-    (ticket) => ticket.id === parseInt(id)
-  );
-
-  if (!ticket) {
-    return NextResponse.json(
-      { error: "Ticket not found" },
-      { status: 404 }
-    );
-  }
-
-  return NextResponse.json(ticket);
-}

@@ -8,7 +8,6 @@ import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
-import { handleError } from "@/lib/handlers/error";
 
 const questions: Question[] = [
   {
@@ -55,20 +54,11 @@ const questions: Question[] = [
   },
 ];
 
-const test = async () => {
-  try {
-    throw new Error("This is a test error");
-  } catch (error) {
-    throw new Error("This is a test error");
-    handleError(error);
-  }
-
-  interface SearchParams {
-    searchParams: Promise<{
-      [key: string]: string;
-    }>;
-  }
-};
+interface SearchParams {
+  searchParams: Promise<{
+    [key: string]: string;
+  }>;
+}
 
 export default async function Home({
   searchParams,

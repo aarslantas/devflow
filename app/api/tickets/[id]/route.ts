@@ -47,3 +47,27 @@ export async function PUT(
 
   return NextResponse.json(tickets[ticketIndex]);
 }
+
+export async function DELETE(
+  _: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+
+  const ticketIndex = tickets.findIndex(
+    (ticket) => ticket.id === parseInt(id)
+  );
+
+  if (ticketIndex === -1) {
+    return NextResponse.json(
+      { error: "Ticket not found" },
+      { status: 404 }
+    );
+  }
+
+  tickets.splice(ticketIndex, 1);
+
+  return NextResponse.json({
+    message: "Ticket deleted successfully",
+  });
+}

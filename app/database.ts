@@ -32,7 +32,7 @@ const tickets: Ticket[] = [
   },
   {
     id: 5,
-    name: "Ticket 5",
+    name: "Ticketn abdurrahman 5",
     status: "closed",
     type: "feature",
   },

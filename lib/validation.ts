@@ -1,8 +1,6 @@
-import { title } from "process";
-
 import { z } from "zod";
 
-export const SignInSchema = z.object({
+export const SignUpSchema = z.object({
   username: z
     .string()
     .min(3, {
@@ -66,6 +64,21 @@ export const SignInSchema = z.object({
     }),
 });
 
+export const SignInSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "Email is required." })
+    .email({
+      message:
+        "Please provide a valid email address.",
+    }),
+
+  password: z.string().min(6, {
+    message:
+      "Password must be at least 6 characters long.",
+  }),
+});
+
 export const AskQuestionSchema = z.object({
   title: z
     .string()
@@ -95,4 +108,29 @@ export const AskQuestionSchema = z.object({
     .max(30, {
       message: "Cannot add more than 3 tags.",
     }),
+});
+
+export const UserSchema = z.object({
+  name: z
+    .string()
+    .min(1, { message: "Name is required" }),
+  userName: z.string().min(3, {
+    message:
+      "Username must be at least 3 character",
+  }),
+  email: z
+    .string()
+    .email(
+      "Please provide a valid email adress."
+    ),
+  bio: z.string().optional(),
+  image: z
+    .string()
+    .url({
+      message: "Please provide a valid URL",
+    })
+    .optional(),
+  location: z.string().optional(),
+  portfolio: z.string().optional(),
+  reputation: z.number().optional(),
 });

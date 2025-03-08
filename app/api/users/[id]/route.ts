@@ -4,12 +4,13 @@ import User from "@/database/user.model";
 import { handleError } from "@/lib/handlers/error";
 import { NotFoundError } from "@/lib/http-errors";
 import dbConnect from "@/lib/mongoose";
+import { UserSchema } from "@/lib/validation";
 import { APIErrorResponse } from "@/types/global";
 
 // Get User by ID   -> /api/users/[id]
 export async function GET(
   _: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
 
@@ -42,7 +43,7 @@ export async function GET(
 // Delete User by ID -> /api/users/[id]
 export async function DELETE(
   _: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
 
@@ -61,6 +62,50 @@ export async function DELETE(
       {
         success: true,
         message: "User deleted successfully",
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    return handleError(
+      error,
+      "api"
+    ) as APIErrorResponse;
+  }
+}
+
+// Update User by ID -> /api/users/[id]
+export async function PUT(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+
+  if (!id) {
+    throw new NotFoundError("User");
+  }
+
+  try {
+    await dbConnect();
+
+    const body = await request.json();
+    const validatedData =
+      UserSchema.partial().parse(body);
+
+    const updatedUser =
+      await User.findByIdAndUpdate(
+        id,
+        validatedData,
+        { new: true }
+      );
+
+    if (!updatedUser) {
+      throw new NotFoundError("User not found");
+    }
+
+    return NextResponse.json(
+      {
+        success: true,
+        data: updatedUser,
       },
       { status: 200 }
     );

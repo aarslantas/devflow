@@ -4,7 +4,6 @@ import User from "@/database/user.model";
 import { handleError } from "@/lib/handlers/error";
 import {
   NotFoundError,
-  NotFoundError,
   ValidationError,
 } from "@/lib/http-errors";
 import { UserSchema } from "@/lib/validation";

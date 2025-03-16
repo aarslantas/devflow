@@ -1,11 +1,8 @@
-import { url } from "inspector";
-
-import { headers } from "next/headers";
-
 import { ActionResponse } from "@/types/global";
 
 import logger from "../logger";
 import { handleError } from "./error";
+import { RequestError } from "../http-errors";
 
 interface FetchOptions extends RequestInit {
   timeout?: number;
@@ -48,6 +45,16 @@ export async function fetchHandler<T>(
   };
 
   try {
+    const response = await fetch(url, config);
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      throw new RequestError(
+        response.status,
+        `HTTP error: ${response.statusText}`
+      );
+    }
+    return await response.json();
   } catch (err) {
     const error = isError(err)
       ? err

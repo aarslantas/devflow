@@ -182,3 +182,28 @@ export const AccountSchema = z.object({
     message: "Provider Account ID is required.",
   }),
 });
+
+export const SignInWithOAuthSchema = z.object({
+  provider: z.enum(["google", "github"]),
+  providerAccountId: z.string(),
+  user: z.object({
+    name: z
+      .string()
+      .min(1, { message: "Name is required" }),
+    userName: z.string().min(3, {
+      message:
+        "Username must be at least 3 character",
+    }),
+    email: z
+      .string()
+      .email(
+        "Please provide a valid email adress."
+      ),
+    image: z
+      .string()
+      .url({
+        message: "Invalid image URL",
+      })
+      .optional(),
+  }),
+});

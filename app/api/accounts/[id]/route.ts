@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 
 import Account from "@/database/account.model";
-import User from "@/database/user.model";
 import { handleError } from "@/lib/handlers/error";
 import {
   NotFoundError,
@@ -45,7 +44,6 @@ export async function GET(
   }
 }
 
-// Delete User by ID -> /api/users/[id]
 export async function DELETE(
   _: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -70,7 +68,7 @@ export async function DELETE(
       {
         success: true,
         data: account,
-        message: "User deleted successfully",
+        message: "Account deleted successfully",
       },
       { status: 200 }
     );
@@ -82,7 +80,6 @@ export async function DELETE(
   }
 }
 
-// Update User by ID -> /api/users/[id]
 export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -107,7 +104,7 @@ export async function PUT(
     }
 
     const updatedAccount =
-      await User.findByIdAndUpdate(
+      await Account.findByIdAndUpdate(
         id,
         validatedData,
         { new: true }

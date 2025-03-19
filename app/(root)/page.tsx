@@ -1,13 +1,12 @@
-import { Tags } from "lucide-react";
-import { SearchParams } from "next/dist/server/request/search-params";
 import Link from "next/link";
 
-import { auth } from "@/auth";
 import QuestionCard from "@/components/cards/QuestionCard";
 import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
+import { api } from "@/lib/api";
+import { Question } from "@/types/global";
 
 const questions: Question[] = [
   {
@@ -60,6 +59,14 @@ interface SearchParams {
   }>;
 }
 
+const test = async () => {
+  try {
+    return await api.users.getAll();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export default async function Home({
   searchParams,
 }: SearchParams) {
@@ -70,8 +77,6 @@ export default async function Home({
     await searchParams;
 
   const result = await test();
-
-  console.log("result", result);
 
   const filteredQuestions = questions.filter(
     (question) => {

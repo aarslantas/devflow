@@ -1,7 +1,4 @@
-import { strict } from "assert";
-
 import mongoose from "mongoose";
-import { NextResponse } from "next/server";
 import slugify from "slugify";
 
 import Account from "@/database/account.model";

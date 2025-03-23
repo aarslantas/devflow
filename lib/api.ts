@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { IAccount } from "@/database/account.model";
 import { IUser } from "@/database/user.model";
 
@@ -7,6 +8,25 @@ const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const api = {
+  auth: {
+    oAuthSingIn: ({
+      user,
+      provider,
+      providerAccountId,
+    }: SignOnWithOAuthParams) => {
+      return fetchHandler(
+        `${API_BASE_URL}/auth/signin-with-oauth`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            user,
+            provider,
+            providerAccountId,
+          }),
+        }
+      );
+    },
+  },
   users: {
     getAll: () =>
       fetchHandler(`${API_BASE_URL}/users`),

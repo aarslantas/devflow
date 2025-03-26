@@ -13,9 +13,9 @@ import { ActionResponse } from "./types/global";
 export const { handlers, signIn, signOut, auth } =
   NextAuth({
     providers: [GitHub, Google],
-    // pages: {
-    //   signIn: "/sign-in",
-    // },
+    pages: {
+      signIn: "/sign-in",
+    },
     callbacks: {
       async session({ session, token }) {
         session.user.id = token.sub as string;
@@ -45,6 +45,12 @@ export const { handlers, signIn, signOut, auth } =
         return token;
       },
       async signIn({ user, profile, account }) {
+        console.log(
+          "signIn",
+          user,
+          profile,
+          account
+        );
         if (account?.type === "credentials") {
           return true;
         }
@@ -62,19 +68,24 @@ export const { handlers, signIn, signOut, auth } =
               : (user.name?.toLowerCase() as string),
         };
 
-        const { success } =
-          (await api.auth.oAuthSingIn({
-            user: userInfo,
-            provider: account.provider as
-              | "github"
-              | "google",
-            providerAccountId:
-              account.id as string,
-          })) as ActionResponse;
+        console.log("userInfo", userInfo);
 
-        if (!success) {
-          return false;
-        }
+        // const { success } =
+        //   (await api.auth.oAuthSingIn({
+        //     user: userInfo,
+        //     provider: account.provider as
+        //       | "github"
+        //       | "google",
+        //     providerAccountId:
+        //       account.id as string,
+        //   })) as ActionResponse;
+
+        // if (!success) {
+        //   console.log("runnnnn1");
+        //   return false;
+        // }
+
+        console.log("runnnnn2");
 
         return true;
       },

@@ -45,12 +45,6 @@ export const { handlers, signIn, signOut, auth } =
         return token;
       },
       async signIn({ user, profile, account }) {
-        console.log(
-          "signIn",
-          user,
-          profile,
-          account
-        );
         if (account?.type === "credentials") {
           return true;
         }
@@ -84,8 +78,6 @@ export const { handlers, signIn, signOut, auth } =
         //   console.log("runnnnn1");
         //   return false;
         // }
-
-        console.log("runnnnn2");
 
         return true;
       },

@@ -10,7 +10,7 @@ const API_BASE_URL =
 
 export const api = {
   auth: {
-    oAuthSingIn: ({
+    oAuthSignIn: ({
       user,
       provider,
       providerAccountId,

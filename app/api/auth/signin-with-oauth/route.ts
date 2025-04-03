@@ -11,9 +11,15 @@ import { SignInWithOAuthSchema } from "@/lib/validation";
 import { APIErrorResponse } from "@/types/global";
 
 export async function POST(request: Request) {
+  console.log("signin-with-oauth-123", request);
   const { provider, providerAccountId, user } =
     await request.json();
-
+  console.log(
+    "provider-123",
+    provider,
+    providerAccountId,
+    user
+  );
   await dbConnect();
 
   const session = await mongoose.startSession();
@@ -114,4 +120,26 @@ export async function POST(request: Request) {
   } finally {
     session.endSession();
   }
+}
+
+export async function GET() {
+  const users = [
+    {
+      id: 1,
+      name: "John Doe",
+      email: "john@example.com",
+    },
+    {
+      id: 2,
+      name: "Jane Smith",
+      email: "jane@example.com",
+    },
+    {
+      id: 3,
+      name: "Alice Johnson",
+      email: "alice@example.com",
+    },
+  ];
+
+  return NextResponse.json(users);
 }

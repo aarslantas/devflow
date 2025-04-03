@@ -1,3 +1,5 @@
+import { config } from "process";
+
 import { ActionResponse } from "@/types/global";
 
 import logger from "../logger";
@@ -16,6 +18,8 @@ export async function fetchHandler<T>(
   url: string,
   options: FetchOptions = {}
 ): Promise<ActionResponse<T>> {
+  console.log("fetchHandler123", url, options);
+
   const {
     timeout = 5000,
     headers: customHeaders = {},
@@ -31,7 +35,6 @@ export async function fetchHandler<T>(
   const defaultHeaders: HeadersInit = {
     "Content-Type": "application/json",
     Accept: "application/json",
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
   };
 
   const headers: HeadersInit = {
@@ -45,6 +48,7 @@ export async function fetchHandler<T>(
   };
 
   try {
+    console.log("config123", config, url);
     const response = await fetch(url, config);
     clearTimeout(timeoutId);
 
@@ -54,6 +58,7 @@ export async function fetchHandler<T>(
         `HTTP error: ${response.statusText}`
       );
     }
+    console.log("response123", response);
     return await response.json();
   } catch (err) {
     const error = isError(err)

@@ -11,19 +11,12 @@ import { SignInWithOAuthSchema } from "@/lib/validation";
 import { APIErrorResponse } from "@/types/global";
 
 export async function POST(request: Request) {
-  console.log("signin-with-oauth-123", request);
   const { provider, providerAccountId, user } =
     await request.json();
-  console.log(
-    "provider-123",
-    provider,
-    providerAccountId,
-    user
-  );
+
   await dbConnect();
 
   const session = await mongoose.startSession();
-
   session.startTransaction();
 
   try {
@@ -34,15 +27,16 @@ export async function POST(request: Request) {
         user,
       });
 
-    if (!validatedData.success) {
+    console.log("validatedData", validatedData);
+
+    if (!validatedData.success)
       throw new ValidationError(
         validatedData.error.flatten().fieldErrors
       );
-    }
 
-    const { name, userName, email, image } = user;
+    const { name, username, email, image } = user;
 
-    const slugifiedUserName = slugify(userName, {
+    const slugifiedUsername = slugify(username, {
       lower: true,
       strict: true,
       trim: true,
@@ -57,7 +51,7 @@ export async function POST(request: Request) {
         [
           {
             name,
-            userName: slugifiedUserName,
+            username: slugifiedUsername,
             email,
             image,
           },
@@ -70,16 +64,13 @@ export async function POST(request: Request) {
         image?: string;
       } = {};
 
-      if (existingUser.name !== name) {
+      if (existingUser.name !== name)
         updatedData.name = name;
-      }
-
-      if (existingUser.image !== image) {
+      if (existingUser.image !== image)
         updatedData.image = image;
-      }
 
       if (Object.keys(updatedData).length > 0) {
-        await User.findOneAndUpdate(
+        await User.updateOne(
           { _id: existingUser._id },
           { $set: updatedData }
         ).session(session);
@@ -99,9 +90,10 @@ export async function POST(request: Request) {
         [
           {
             userId: existingUser._id,
+            name,
+            image,
             provider,
             providerAccountId,
-            name,
           },
         ],
         { session }
@@ -109,10 +101,10 @@ export async function POST(request: Request) {
     }
 
     await session.commitTransaction();
+
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
     await session.abortTransaction();
-
     return handleError(
       error,
       "api"
@@ -120,26 +112,4 @@ export async function POST(request: Request) {
   } finally {
     session.endSession();
   }
-}
-
-export async function GET() {
-  const users = [
-    {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      email: "jane@example.com",
-    },
-    {
-      id: 3,
-      name: "Alice Johnson",
-      email: "alice@example.com",
-    },
-  ];
-
-  return NextResponse.json(users);
 }

@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import ROUTES from "@/constants/routes";
 import { IAccount } from "@/database/account.model";
 import { IUser } from "@/database/user.model";
@@ -6,26 +5,26 @@ import { IUser } from "@/database/user.model";
 import { fetchHandler } from "./handlers/fetch";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL;
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  "http://localhost:3000/api";
 
 export const api = {
   auth: {
-    oAuthSingIn: ({
+    oAuthSignIn: ({
       user,
       provider,
       providerAccountId,
     }: SignOnWithOAuthParams) => {
-      return fetchHandler(
-        `${API_BASE_URL}/auth/${ROUTES.SIGN_IN_WITH_OAUTH}`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            user,
-            provider,
-            providerAccountId,
-          }),
-        }
-      );
+      const url1 = `${API_BASE_URL}/auth/${ROUTES.SIGN_IN_WITH_OAUTH}`;
+      console.log("url123", url1, user);
+      return fetchHandler(url1, {
+        method: "POST",
+        body: JSON.stringify({
+          user,
+          provider,
+          providerAccountId,
+        }),
+      });
     },
   },
   users: {

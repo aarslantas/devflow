@@ -17,7 +17,6 @@ export async function POST(request: Request) {
   await dbConnect();
 
   const session = await mongoose.startSession();
-
   session.startTransaction();
 
   try {
@@ -28,15 +27,16 @@ export async function POST(request: Request) {
         user,
       });
 
-    if (!validatedData.success) {
+    console.log("validatedData", validatedData);
+
+    if (!validatedData.success)
       throw new ValidationError(
         validatedData.error.flatten().fieldErrors
       );
-    }
 
-    const { name, userName, email, image } = user;
+    const { name, username, email, image } = user;
 
-    const slugifiedUserName = slugify(userName, {
+    const slugifiedUsername = slugify(username, {
       lower: true,
       strict: true,
       trim: true,
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
         [
           {
             name,
-            userName: slugifiedUserName,
+            username: slugifiedUsername,
             email,
             image,
           },
@@ -64,16 +64,13 @@ export async function POST(request: Request) {
         image?: string;
       } = {};
 
-      if (existingUser.name !== name) {
+      if (existingUser.name !== name)
         updatedData.name = name;
-      }
-
-      if (existingUser.image !== image) {
+      if (existingUser.image !== image)
         updatedData.image = image;
-      }
 
       if (Object.keys(updatedData).length > 0) {
-        await User.findOneAndUpdate(
+        await User.updateOne(
           { _id: existingUser._id },
           { $set: updatedData }
         ).session(session);
@@ -93,9 +90,10 @@ export async function POST(request: Request) {
         [
           {
             userId: existingUser._id,
+            name,
+            image,
             provider,
             providerAccountId,
-            name,
           },
         ],
         { session }
@@ -103,10 +101,10 @@ export async function POST(request: Request) {
     }
 
     await session.commitTransaction();
+
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
     await session.abortTransaction();
-
     return handleError(
       error,
       "api"

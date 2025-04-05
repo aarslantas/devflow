@@ -19,6 +19,13 @@ export async function POST(request: Request) {
   const session = await mongoose.startSession();
   session.startTransaction();
 
+  console.log(
+    "provider123",
+    provider,
+    providerAccountId,
+    user
+  );
+
   try {
     const validatedData =
       SignInWithOAuthSchema.safeParse({

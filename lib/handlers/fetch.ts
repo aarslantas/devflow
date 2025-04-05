@@ -58,7 +58,7 @@ export async function fetchHandler<T>(
         `HTTP error: ${response.statusText}`
       );
     }
-    console.log("response123", response);
+
     return await response.json();
   } catch (err) {
     const error = isError(err)

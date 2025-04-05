@@ -45,24 +45,19 @@ export const { handlers, signIn, signOut, auth } =
       //   return token;
       // },
       async signIn({ user, profile, account }) {
-        if (account?.type === "credentials") {
+        if (account?.type === "credentials")
           return true;
-        }
-        if (!account || !user) {
-          return false;
-        }
+        if (!account || !user) return false;
 
         const userInfo = {
-          name: user.name,
-          email: user.email,
-          image: user.image,
+          name: user.name!,
+          email: user.email!,
+          image: user.image!,
           username:
             account.provider === "github"
               ? (profile?.login as string)
               : (user.name?.toLowerCase() as string),
         };
-
-        console.log("userInfo", userInfo);
 
         const { success } =
           (await api.auth.oAuthSignIn({
@@ -71,12 +66,10 @@ export const { handlers, signIn, signOut, auth } =
               | "github"
               | "google",
             providerAccountId:
-              account.id as string,
+              account.providerAccountId,
           })) as ActionResponse;
 
-        if (!success) {
-          return false;
-        }
+        if (!success) return false;
 
         return true;
       },

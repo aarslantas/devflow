@@ -1,4 +1,4 @@
-interface SignOnWithOAuthParams {
+interface SignInWithOAuthParams {
   provider: "github" | "google";
   providerAccountId: string;
   user: {
@@ -7,4 +7,11 @@ interface SignOnWithOAuthParams {
     image: string;
     username: string;
   };
+}
+
+interface AuthCredentials {
+  name: string;
+  username: string;
+  email: string;
+  password: string;
 }

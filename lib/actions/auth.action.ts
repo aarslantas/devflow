@@ -1,5 +1,11 @@
+import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
 
+import Account from "@/database/account.model";
+import User, {
+  IUserDoc,
+  IUserDoc,
+} from "@/database/user.model";
 import {
   ActionResponse,
   ErrorResponse,
@@ -28,4 +34,65 @@ export async function sigupWithCredentials(
 
   const session = await mongoose.startSession();
   session.startTransaction();
+
+  try {
+    const existingUser = await User.findOne({
+      email,
+    }).session(session);
+
+    if (existingUser) {
+      throw new Error(
+        "User already exists with this email"
+      );
+    }
+
+    const existingUserName = await User.findOne({
+      username,
+    }).session(session);
+
+    if (existingUserName) {
+      throw new Error("Username already exists");
+    }
+
+    const hashedPassword = await bcrypt.hash(
+      password,
+      10
+    );
+
+    const [newUser] = new User(
+      [
+        {
+          username,
+          name,
+          email,
+        },
+      ],
+      {
+        session,
+      }
+    );
+
+    await Account.create(
+      {
+        userId: newUser._id,
+        name,
+        provider: "credentials",
+        providerAccountId: email,
+        password: hashedPassword,
+      },
+      { session }
+    );
+
+    await session.commitTransaction();
+
+    return {
+      success: true,
+      data: newUser,
+    };
+  } catch (error) {
+    await session.abortTransaction();
+    return handleError(error) as ErrorResponse;
+  } finally {
+    session.endSession();
+  }
 }

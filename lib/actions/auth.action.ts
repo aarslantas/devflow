@@ -1,11 +1,9 @@
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
 
+import { signIn } from "@/auth";
 import Account from "@/database/account.model";
-import User, {
-  IUserDoc,
-  IUserDoc,
-} from "@/database/user.model";
+import User from "@/database/user.model";
 import {
   ActionResponse,
   ErrorResponse,
@@ -15,7 +13,7 @@ import action from "../handlers/action";
 import { handleError } from "../handlers/error";
 import { SignUpSchema } from "../validation";
 
-export async function sigupWithCredentials(
+export async function signUpWithCredentials(
   params: AuthCredentials
 ): Promise<ActionResponse> {
   const validationResult = await action({
@@ -82,6 +80,12 @@ export async function sigupWithCredentials(
       },
       { session }
     );
+
+    await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
 
     await session.commitTransaction();
 

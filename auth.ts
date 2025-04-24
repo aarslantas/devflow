@@ -12,7 +12,35 @@ import { ActionResponse } from "./types/global";
 
 export const { handlers, signIn, signOut, auth } =
   NextAuth({
-    providers: [GitHub, Google],
+    providers: [
+      GitHub,
+      Google,
+      Credentials({
+        async authorize(credentials, req) {
+          const { email, password } =
+            credentials as {
+              email: string;
+              password: string;
+            };
+
+          const { data, success } =
+            (await api.auth.signInWithCredentials(
+              {
+                email,
+                password,
+              }
+            )) as ActionResponse;
+
+          if (!success) {
+            throw new Error(
+              "Invalid credentials"
+            );
+          }
+
+          return data;
+        },
+      }),
+    ],
     pages: {
       signIn: "/sign-in",
     },

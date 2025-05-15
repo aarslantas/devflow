@@ -73,15 +73,19 @@ export async function signUpWithCredentials(
     );
 
     await Account.create(
-      {
-        userId: newUser._id,
-        name,
-        provider: "credentials",
-        providerAccountId: email,
-        password: hashedPassword,
-      },
+      [
+        {
+          userId: newUser._id,
+          name,
+          provider: "credentials",
+          providerAccountId: email,
+          password: hashedPassword,
+        },
+      ],
       { session }
     );
+
+    await session.commitTransaction();
 
     await signIn("credentials", {
       email,

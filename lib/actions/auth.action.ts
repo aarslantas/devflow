@@ -169,7 +169,6 @@ export async function signInWithCredentials(
 
     return {
       success: true,
-      data: newUser,
     };
   } catch (error) {
     return handleError(error) as ErrorResponse;

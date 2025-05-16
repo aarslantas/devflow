@@ -16,7 +16,6 @@ import { handleError } from "../handlers/error";
 import { NotFoundError } from "../http-errors";
 import {
   SignInSchema,
-  SignInSchema,
   SignUpSchema,
 } from "../validation";
 
@@ -37,6 +36,13 @@ export async function signUpWithCredentials(
   const { name, username, email, password } =
     validationResult.params!;
 
+  console.log("signUpWithCredentials", {
+    name,
+    username,
+    email,
+    password,
+  });
+
   const session = await mongoose.startSession();
   session.startTransaction();
 
@@ -50,7 +56,7 @@ export async function signUpWithCredentials(
         "User already exists with this email"
       );
     }
-
+    console.log("existingUser", existingUser);
     const existingUserName = await User.findOne({
       username,
     }).session(session);
@@ -61,21 +67,19 @@ export async function signUpWithCredentials(
 
     const hashedPassword = await bcrypt.hash(
       password,
-      10
+      12
     );
 
-    const [newUser] = new User(
-      [
-        {
-          username,
-          name,
-          email,
-        },
-      ],
+    console.log("hashedPassword", hashedPassword);
+
+    const [newUser] = await User.create(
+      [{ username, name, email }],
       {
         session,
       }
     );
+
+    console.log("newUser", newUser);
 
     await Account.create(
       [
@@ -97,8 +101,6 @@ export async function signUpWithCredentials(
       password,
       redirect: false,
     });
-
-    await session.commitTransaction();
 
     return {
       success: true,

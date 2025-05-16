@@ -2,13 +2,13 @@
 
 import AuthForm from "@/components/forms/AuthForm";
 import { signUpWithCredentials } from "@/lib/actions/auth.action";
-import { SignInSchema } from "@/lib/validation";
+import { SignUpSchema } from "@/lib/validation";
 
 const Signup = () => {
   return (
     <AuthForm
       formType="SIGN_UP"
-      schema={SignInSchema} // değişecek
+      schema={SignUpSchema} // değişecek
       defaultValues={{
         email: "",
         password: "",

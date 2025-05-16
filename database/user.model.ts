@@ -1,7 +1,7 @@
 import {
-  Schema,
-  models,
   model,
+  models,
+  Schema,
   Document,
 } from "mongoose";
 

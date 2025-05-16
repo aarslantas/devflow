@@ -2,8 +2,9 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import router from "next/navigation";
-import router, { useRouter } from "next/router";
+import router, {
+  useRouter,
+} from "next/navigation";
 import {
   DefaultValues,
   FieldValues,
@@ -25,10 +26,7 @@ import {
 import { Input } from "@/components/ui/input";
 import ROUTES from "@/constants/routes";
 import { toast } from "@/hooks/use-toast";
-import {
-  ActionResponse,
-  ActionResponse,
-} from "@/types/global";
+import { ActionResponse } from "@/types/global";
 
 interface AuthFormProps<T extends FieldValues> {
   schema: ZodType<T>;

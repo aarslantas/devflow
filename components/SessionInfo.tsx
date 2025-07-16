@@ -1,4 +1,3 @@
-import { Button } from "@mdxeditor/editor";
 import React from "react";
 
 import { auth, signOut } from "@/auth";
@@ -10,7 +9,7 @@ const SessionInfo = async () => {
   return (
     <div>
       <h2>Session Information</h2>
-      <p>User: {session?.user.email}</p>
+      {/* <p>User: {session?.user.email}</p> */}
       <p>Session Start: </p>
       <form
         className="px-10 pt-[100px]"

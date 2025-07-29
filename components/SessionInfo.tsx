@@ -9,7 +9,6 @@ const SessionInfo = async () => {
   return (
     <div>
       <h2>Session Information</h2>
-      {/* <p>User: {session?.user.email}</p> */}
       <p>Session Start: </p>
       <form
         className="px-10 pt-[100px]"
